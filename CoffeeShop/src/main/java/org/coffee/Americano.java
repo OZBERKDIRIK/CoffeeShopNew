@@ -1,0 +1,20 @@
+package org.coffee;
+
+import org.ingredients.CoffeeIngredients;
+import org.ingredients.Espresso;
+import org.ingredients.HotWater;
+
+
+public class Americano extends CoffeeBase{
+    public Americano() {
+        super("Americano");
+        Espresso espresso = new Espresso();
+        addIngredient(espresso,1);
+
+        HotWater hotWater = new HotWater();
+        addIngredient(hotWater,4);
+
+        calculatePrice();
+
+    }
+}
