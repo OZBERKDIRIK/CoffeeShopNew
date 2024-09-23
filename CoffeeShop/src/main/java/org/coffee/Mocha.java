@@ -3,7 +3,7 @@ package org.coffee;
 import org.ingredients.*;
 import org.ingredients.Espresso;
 
-public class Mocha extends CoffeeBase{
+public class Mocha extends Coffee{
     public Mocha() {
         super("Mocha");
         Espresso espresso = new Espresso();
@@ -18,6 +18,5 @@ public class Mocha extends CoffeeBase{
         HotChocolate hotChocolate = new HotChocolate();
         addIngredient(hotChocolate,2);
 
-        calculatePrice();
     }
 }

@@ -1,37 +1,33 @@
 package org.ingredients;
 
-public class CoffeeIngredients {
+public class CoffeeIngredients implements Ingredients{
 
-    private String coffeeIngredientName;
+    private String name;
 
-    private int coffeeIngredientPrice;
+    private int price;
 
 
     public CoffeeIngredients (){
     }
 
     public CoffeeIngredients(String coffeeIngredientName , int coffeeIngredientPrice){
-        this.coffeeIngredientName=coffeeIngredientName;
-        this.coffeeIngredientPrice=coffeeIngredientPrice;
+        this.name=coffeeIngredientName;
+        this.price=coffeeIngredientPrice;
     }
 
-    public String getCoffeeIngredientName() {
-        return coffeeIngredientName;
+
+    @Override
+    public String getName() {
+        return name;
     }
 
-    public void setCoffeeIngredientName(String coffeeIngredientName) {
-        this.coffeeIngredientName = coffeeIngredientName;
+    @Override
+    public int getPrice() {
+        return price;
     }
 
-    public int getCoffeeIngredientPrice() {
-        return coffeeIngredientPrice;
-    }
+    @Override
+    public void setPrice() {
 
-    public void setCoffeeIngredientPrice(int coffeeIngredientPrice) {
-        if(coffeeIngredientPrice<0){
-            System.out.println("Fiyat Negatif Olamaz");
-        }else{
-        this.coffeeIngredientPrice = coffeeIngredientPrice;
-        }
     }
 }

@@ -5,7 +5,7 @@ import org.ingredients.HotWater;
 import org.ingredients.MilkFoam;
 import org.ingredients.SteamedMilk;
 
-public class Cappuccino extends CoffeeBase{
+public class Cappuccino extends Coffee{
     public Cappuccino() {
         super("Cappucino");
         Espresso espresso = new Espresso();
@@ -17,7 +17,6 @@ public class Cappuccino extends CoffeeBase{
         MilkFoam milkFoam = new MilkFoam();
         addIngredient(milkFoam,2);
 
-        calculatePrice();
 
     }
 }

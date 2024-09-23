@@ -6,36 +6,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CoffeeOrderOperation{
-    List<CoffeeBase> coffeelist;
+    List<Beverage> coffeelist;
     public CoffeeOrderOperation(){
-        Americano americano = new Americano();
-        Espresso espresso = new Espresso();
-        DoubleEspresso doubleEspresso = new DoubleEspresso();
-        Cappuccino cappuccino = new Cappuccino();
-        Mocha mocha = new Mocha();
-        CaffeeLate caffeeLate = new CaffeeLate();
+        //Referans ile tutulmasına gerek yoktur
+//        Americano americano = new Americano();
+//        Espresso espresso = new Espresso();
+//        DoubleEspresso doubleEspresso = new DoubleEspresso();
+//        Cappuccino cappuccino = new Cappuccino();
+//        Mocha mocha = new Mocha();
+//        CaffeeLate caffeeLate = new CaffeeLate();
 
         coffeelist = new ArrayList<>();
 
-        coffeelist.add(americano);
-        coffeelist.add(espresso);
-        coffeelist.add(doubleEspresso);
-        coffeelist.add(cappuccino);
-        coffeelist.add(mocha);
-        coffeelist.add(caffeeLate);
+        coffeelist.add(new Americano());
+        coffeelist.add(new Espresso());
+        coffeelist.add(new DoubleEspresso());
+        coffeelist.add(new Cappuccino());
+        coffeelist.add(new Mocha());
+        coffeelist.add(new CaffeeLate());
 
     }
 
+    //İndex kısmı enum ile düzenlenmeli
     public void listOfCoffee(){
         StringBuilder coffeList = new StringBuilder();
         int index = 1;
-        for(CoffeeBase coffeeBase :coffeelist){
-            coffeList.append(index  + " - " +coffeeBase.getCoffeeName() +  " --- Fiyat: " + coffeeBase.getCoffeePrice() +"\n");
+        for(Beverage coffee :coffeelist){
+            coffeList.append(index  + " - " +coffee.getName() +  " --- Fiyat: " + coffee.getPrice() +"\n");
             index++;
         }
         System.out.println(coffeList);
     }
 
+    /*
+     Seçim Metodu Düzenlenmeli ......
     public CoffeeBase selecetCoffee(int number){
         if(number==1){
             return new Americano();
@@ -53,5 +57,7 @@ public class CoffeeOrderOperation{
             System.out.println("Liste Dışında Bir Değer Girdiniz !! ");
             return null;
         }
+
     }
+     */
 }

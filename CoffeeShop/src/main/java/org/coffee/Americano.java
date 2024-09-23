@@ -5,7 +5,7 @@ import org.ingredients.Espresso;
 import org.ingredients.HotWater;
 
 
-public class Americano extends CoffeeBase{
+public class Americano extends Coffee{
     public Americano() {
         super("Americano");
         Espresso espresso = new Espresso();
@@ -13,8 +13,6 @@ public class Americano extends CoffeeBase{
 
         HotWater hotWater = new HotWater();
         addIngredient(hotWater,4);
-
-        calculatePrice();
 
     }
 }
