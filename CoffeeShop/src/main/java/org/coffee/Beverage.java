@@ -1,5 +1,7 @@
 package org.coffee;
 
+import org.ingredients.Ingredients;
+
 public interface Beverage {
     int getPrice();
 
@@ -9,4 +11,5 @@ public interface Beverage {
 
     void writeContents(int price);
 
+    void addIngredient(Ingredients ingredient, int doses);
 }

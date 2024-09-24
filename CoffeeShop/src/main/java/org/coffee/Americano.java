@@ -1,6 +1,5 @@
 package org.coffee;
 
-import org.ingredients.CoffeeIngredients;
 import org.ingredients.Espresso;
 import org.ingredients.HotWater;
 

@@ -36,4 +36,18 @@ public class CoffeeIngredients implements Ingredients{
             this.price=price;
         }
     }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Ingredients)) return false;
+        Ingredients other = (Ingredients) obj;
+        return this.getName().equals(other.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return getName().hashCode();
+    }
 }

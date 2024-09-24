@@ -1,6 +1,6 @@
 package org.coffee;
 
-import org.ingredients.CoffeeIngredients;
+import org.ingredients.Ingredients;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,12 +9,12 @@ public abstract class Coffee implements Beverage {
 
     private int price;
     private String name;
-    private Map<CoffeeIngredients, Integer> contetOfCoffee;
+    private Map<Ingredients, Integer> contetOfCoffee;
 
 
     protected Coffee() {
-        setPrice();
         contetOfCoffee=new HashMap<>();
+        price=0;
     }
 
     protected Coffee(String name) {
@@ -22,10 +22,18 @@ public abstract class Coffee implements Beverage {
         this.name = name;
     }
 
-    //İçerik Eklemel için kullanıyor
-    public void addIngredient(CoffeeIngredients ingredient, int doses) {
-        contetOfCoffee.put(ingredient, doses);
+    //İçerik Eklemek için kullanıyor
+    @Override
+    public void addIngredient(Ingredients ingredient, int doses) {
+        if (contetOfCoffee.containsKey(ingredient)) {
+            int currentDoses = contetOfCoffee.get(ingredient);
+            contetOfCoffee.put(ingredient, currentDoses + doses);
+        } else {
+            contetOfCoffee.put(ingredient, doses);
+        }
+        setPrice();
     }
+
 
 
     //Fiyatı Geri Döndürüyor
@@ -37,10 +45,11 @@ public abstract class Coffee implements Beverage {
     //Fiyatı Hesaplıyor
     @Override
     public void setPrice() {
-        int price = contetOfCoffee.values().stream()
-                .mapToInt(Integer::intValue)
-                .sum();
-        this.price = price;
+        price =0;
+        for(Ingredients ingredients : contetOfCoffee.keySet()){
+            int ingredientPrice = ingredients.getPrice()*contetOfCoffee.get(ingredients);
+            price+=ingredientPrice;
+        }
     }
 
     //İsmini Getiriyor
@@ -54,7 +63,7 @@ public abstract class Coffee implements Beverage {
     @Override
     public void writeContents(int price) {
         contetOfCoffee.forEach((key, value) -> {
-            System.out.print(value + " doz " + key + " içermektedir. ");
+            System.out.print(value + " doz " + key.getName() + " içermektedir. ");
         });
         System.out.println("Toplam Fiyat : " + price);
     }
