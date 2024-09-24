@@ -2,22 +2,24 @@ package org.coffee;
 
 import org.ingredients.CoffeeIngredients;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public abstract class Coffee implements Beverage {
 
     private int price;
-    private String name ;
+    private String name;
     private Map<CoffeeIngredients, Integer> contetOfCoffee;
 
 
     protected Coffee() {
         setPrice();
+        contetOfCoffee=new HashMap<>();
     }
 
     protected Coffee(String name) {
         this();
-        this.name=name;
+        this.name = name;
     }
 
     //İçerik Eklemel için kullanıyor
@@ -28,33 +30,33 @@ public abstract class Coffee implements Beverage {
 
     //Fiyatı Geri Döndürüyor
     @Override
-    public int  getPrice() {
+    public int getPrice() {
         return price;
     }
 
     //Fiyatı Hesaplıyor
     @Override
-    public void setPrice(){
+    public void setPrice() {
         int price = contetOfCoffee.values().stream()
                 .mapToInt(Integer::intValue)
                 .sum();
-        this.price=price;
+        this.price = price;
     }
 
     //İsmini Getiriyor
     @Override
-    public String getName(){
+    public String getName() {
         return name;
     }
 
 
     //İçerikleri Yazdırıyor
     @Override
-    public void writeContents(int price){
-        contetOfCoffee.forEach((key , value)->{
-            System.out.print(value + " doz "+ key + " içermektedir. ");
+    public void writeContents(int price) {
+        contetOfCoffee.forEach((key, value) -> {
+            System.out.print(value + " doz " + key + " içermektedir. ");
         });
-        System.out.println("Toplam Fiyatt : " +price);
+        System.out.println("Toplam Fiyat : " + price);
     }
 
 
