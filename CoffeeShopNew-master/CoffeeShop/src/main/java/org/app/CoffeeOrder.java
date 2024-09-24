@@ -13,10 +13,10 @@ import java.util.List;
 import java.util.Set;
 
 public class CoffeeOrder implements Order{
-   private  List<Beverage> coffeelist;
+   List<Beverage> coffeelist;
    private CoffeeEnum[] coffeeEnums;
 
-   private List<Ingredients> ingredientsList;
+   List<Ingredients> ingredientsList;
    private IngredeintEnum[] ingredeintEnums;
 
     public CoffeeOrder() {
