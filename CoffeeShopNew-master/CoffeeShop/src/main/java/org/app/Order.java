@@ -7,15 +7,10 @@ import java.util.Set;
 
 
 public interface Order {
-    void writeBeverageList();
+    String getBeverageList();
 
-    Beverage getBeverage(int number);
+    Beverage orderBeverage(int number);
 
-    void writeIngredientList();
+    String getIngredientList();
     Ingredients getIngredient(int number);
-
-    void loadBeverage();
-    void loadIngredients();
-
-
 }

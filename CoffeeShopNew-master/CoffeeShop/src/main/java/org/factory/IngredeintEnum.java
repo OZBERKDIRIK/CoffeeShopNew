@@ -2,26 +2,27 @@ package org.factory;
 import org.ingredients.*;
 
 public enum IngredeintEnum {
-    ESPRESSO("Espresso", new Espresso()),
-    HOT_CHOCOLATE("Sıcak Çikolata",new HotChocolate()),
-    HOT_WATER("Sıcak Su",new HotWater()),
-    MILK_FOAM("Süt Köpüğü" , new MilkFoam()),
-    STEAMED_MILK("Sıcak Süt" , new SteamedMilk());
+    ESPRESSO("Espresso" ,1),
+    HOT_CHOCOLATE("Sıcak Çikolata",2),
+    HOT_WATER("Sıcak Su",3),
+    MILK_FOAM("Süt Köpüğü",4),
+    STEAMED_MILK("Sıcak Süt",5);
 
 
     private final String  name ;
-    private final CoffeeIngredients ingredients;
-
-    IngredeintEnum(String name, CoffeeIngredients ingredients){
+    private final int index;
+    IngredeintEnum(String name ,int index )
+    {
         this.name=name;
-        this.ingredients=ingredients;
-    }
+        this.index=index;
 
-    public CoffeeIngredients getIngredients() {
-        return ingredients;
     }
-
-    public String getName() {
+    public String getName()
+    {
         return name;
+    }
+
+    public int getIndex(){
+        return index;
     }
 }

@@ -3,19 +3,19 @@ package org.app;
 import org.coffee.*;
 import org.ingredients.Ingredients;
 
-import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        CoffeeOrder coffeeOrder = new CoffeeOrder();
+        CoffeeOrderManager coffeeOrder = new CoffeeOrderManager();
         String selection;
         int selectionNumber;
         Beverage coffee;
 
         while (true) {
-            coffeeOrder.writeBeverageList();
+            String beverageList = coffeeOrder.getBeverageList();
+            System.out.println(beverageList);
             System.out.println("Seçmek istediğiniz kahve türünün numarasını girin çıkmak için q'ya basın : ");
             selection = scanner.nextLine();
 
@@ -24,7 +24,7 @@ public class App {
             }
 
             selectionNumber = Integer.parseInt(selection);
-            coffee = coffeeOrder.getBeverage(selectionNumber);
+            coffee = coffeeOrder.orderBeverage(selectionNumber);
 
             if (coffee instanceof TemplateCoffee) {
                 handleTemplateCoffee(coffee, coffeeOrder, scanner);
@@ -36,13 +36,14 @@ public class App {
         }
     }
 
-    private static void handleTemplateCoffee(Beverage coffee, CoffeeOrder coffeeOrder, Scanner scanner) {
-        coffeeOrder.writeIngredientList();
+    private static void handleTemplateCoffee(Beverage coffee, CoffeeOrderManager coffeeOrder, Scanner scanner) {
+        String ingredientList = coffeeOrder.getIngredientList();
+        System.out.println(ingredientList);
         System.out.println("Kahvenize Koymak istediğiniz içerikleri seçin : ");
         addIngredientsToCoffee(coffee, coffeeOrder, scanner);
     }
 
-    private static void handleRegularCoffee(Beverage coffee, CoffeeOrder coffeeOrder, Scanner scanner) {
+    private static void handleRegularCoffee(Beverage coffee, CoffeeOrderManager coffeeOrder, Scanner scanner) {
         System.out.println("Seçmiş olduğunuz " + coffee.getName() + " içeceğe ekstra içerik koymak ister misiniz? (e/h)");
         String selection = scanner.nextLine();
 
@@ -53,10 +54,11 @@ public class App {
         }
     }
 
-    private static void addIngredientsToCoffee(Beverage coffee, CoffeeOrder coffeeOrder, Scanner scanner) {
+    private static void addIngredientsToCoffee(Beverage coffee, CoffeeOrderManager coffeeOrder, Scanner scanner) {
         while (true) {
             System.out.println("Eklemeyi bitirmek istediğinizde q'ya basın : ");
-            coffeeOrder.writeIngredientList();
+            String ingredientList= coffeeOrder.getIngredientList();
+            System.out.println(ingredientList);
             String selection = scanner.nextLine();
 
             if (selection.equalsIgnoreCase("q")) {
@@ -75,9 +77,9 @@ public class App {
     }
 
     private static void finalizeOrder(Beverage coffee) {
-        coffee.setPrice();
+        coffee.calculatePrice();
         int price = coffee.getPrice();
-        coffee.writeContents(price);
+        coffee.getContents(price);
         System.out.println("Afiyet Olsun .... ");
     }
 

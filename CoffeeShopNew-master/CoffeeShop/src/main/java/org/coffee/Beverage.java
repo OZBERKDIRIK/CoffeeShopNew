@@ -5,11 +5,11 @@ import org.ingredients.Ingredients;
 public interface Beverage {
     int getPrice();
 
-    void setPrice();
+    void calculatePrice();
 
     String getName();
 
-    void writeContents(int price);
+    String getContents(int price);
 
     void addIngredient(Ingredients ingredient, int doses);
 }

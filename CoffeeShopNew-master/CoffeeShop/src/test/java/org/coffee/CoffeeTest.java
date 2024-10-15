@@ -69,7 +69,7 @@ public class CoffeeTest {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
-        coffee.writeContents(coffee.getPrice());
+        coffee.getContents(coffee.getPrice());
 
         String expectedOutput = "Test Coffee içerisinde ---> 2 doz Hot Water içermektedir. 1 doz Espresso içermektedir. Toplam Fiyat : 14";
 

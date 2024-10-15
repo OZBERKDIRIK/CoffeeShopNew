@@ -9,7 +9,7 @@ public abstract class Coffee implements Beverage {
 
     private int price;
     private String name;
-    private Map<Ingredients, Integer> contetOfCoffee;
+    protected Map<Ingredients, Integer> contetOfCoffee;
 
 
     protected Coffee() {
@@ -31,7 +31,7 @@ public abstract class Coffee implements Beverage {
         } else {
             contetOfCoffee.put(ingredient, doses);
         }
-        setPrice();
+        calculatePrice();
     }
 
 
@@ -44,7 +44,7 @@ public abstract class Coffee implements Beverage {
 
     //Fiyatı Hesaplıyor
     @Override
-    public void setPrice() {
+    public void calculatePrice() {
         price =0;
         for(Ingredients ingredients : contetOfCoffee.keySet()){
             int ingredientPrice = ingredients.getPrice()*contetOfCoffee.get(ingredients);
@@ -59,14 +59,14 @@ public abstract class Coffee implements Beverage {
     }
 
 
-    //İçerikleri Yazdırıyor
     @Override
-    public void writeContents(int price) {
-        System.out.print(name + " içerisinde ---> ");
-        contetOfCoffee.forEach((key, value) -> {
-            System.out.print(value + " doz " + key.getName() + " içermektedir. ");
-        });
-        System.out.println("Toplam Fiyat : " + price);
+    public String getContents(int price) {
+        String content = name + " içerisinde ";
+       for(Map.Entry<Ingredients, Integer> map :contetOfCoffee.entrySet()){
+           content = content + map.getValue() + " doz " + map.getKey();
+       }
+       content+=" içermektedir ";
+       return content;
     }
 
 
