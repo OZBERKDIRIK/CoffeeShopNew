@@ -36,7 +36,8 @@ public class CoffeeOrderManager implements Order{
     public String getBeverageList() {
         String coffeeList="";
         for(CoffeeEnum coffeeEnum :coffeeEnumList){
-            coffeeList = coffeeList+coffeeEnum.getIndex() +" --- "+ coffeeEnum.getName()+"--- Fiyatı: "+"\n";
+            Beverage coffee = coffeeFactory.createCoffee(coffeeEnum);
+            coffeeList = coffeeList+coffeeEnum.getIndex() +" --- "+ coffeeEnum.getName()+"--- Fiyatı: "+coffee.getPrice() +"\n";
         }
         return coffeeList;
     }
@@ -54,7 +55,8 @@ public class CoffeeOrderManager implements Order{
     {
         String ingredientList="";
         for(IngredeintEnum ingredientEnum :coffeeIngredientsEnumList){
-            ingredientList = ingredientEnum.getIndex() +" --- "+ ingredientEnum+ " " + ingredientEnum.getName();
+            Ingredients ingredients =ingredientFactory.createCoffeeIngredient(ingredientEnum);
+            ingredientList = ingredientList+ingredientEnum.getIndex() +" --- "+ingredientEnum.getName()+" --- Fiyatı : "+ingredients.getPrice() +"\n";
         }
         return ingredientList;
     }

@@ -59,6 +59,7 @@ public class App {
             System.out.println("Eklemeyi bitirmek istediğinizde q'ya basın : ");
             String ingredientList= coffeeOrder.getIngredientList();
             System.out.println(ingredientList);
+            System.out.println("Seçmek istediğiniz ek malzemenin listeden numarasını girin: ");
             String selection = scanner.nextLine();
 
             if (selection.equalsIgnoreCase("q")) {
@@ -79,7 +80,8 @@ public class App {
     private static void finalizeOrder(Beverage coffee) {
         coffee.calculatePrice();
         int price = coffee.getPrice();
-        coffee.getContents(price);
+        String contentsOfCoffee = coffee.getContents(price);
+        System.out.println(contentsOfCoffee);
         System.out.println("Afiyet Olsun .... ");
     }
 

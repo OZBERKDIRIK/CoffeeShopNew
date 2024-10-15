@@ -61,11 +61,11 @@ public abstract class Coffee implements Beverage {
 
     @Override
     public String getContents(int price) {
-        String content = name + " içerisinde ";
+        String content = name + " içerisinde ----> "+"\n";
        for(Map.Entry<Ingredients, Integer> map :contetOfCoffee.entrySet()){
-           content = content + map.getValue() + " doz " + map.getKey();
+           content = content + map.getValue() + " doz " + map.getKey().getName() + "\n";
        }
-       content+=" içermektedir ";
+       content+="içermektedir." +"\n" + "Fiyatı : "+price;
        return content;
     }
 
