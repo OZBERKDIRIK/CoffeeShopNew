@@ -1,33 +1,33 @@
 package org.factory;
 
-import org.coffee.Beverage;
-import org.coffee.Coffee;
 import org.ingredients.*;
 
-import java.util.HashMap;
-import java.util.Map;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class IngredientFactory {
-    private final Map<IngredeintEnum, CoffeeIngredients> ingredientsMap;
+    private final List<IngredeintEnum> ingredientsMap;
 
     public IngredientFactory() {
-        ingredientsMap=new HashMap<>();
-        registerIngredient(IngredeintEnum.ESPRESSO, new Espresso());
-        registerIngredient(IngredeintEnum.HOT_CHOCOLATE, new HotChocolate());
-        registerIngredient(IngredeintEnum.HOT_WATER,new HotWater());
-        registerIngredient(IngredeintEnum.MILK_FOAM,new MilkFoam());
-        registerIngredient(IngredeintEnum.STEAMED_MILK,new SteamedMilk());
+        ingredientsMap=new ArrayList<>();
+        registerIngredient(IngredeintEnum.ESPRESSO);
+        registerIngredient(IngredeintEnum.HOT_CHOCOLATE);
+        registerIngredient(IngredeintEnum.HOT_WATER);
+        registerIngredient(IngredeintEnum.MILK_FOAM);
+        registerIngredient(IngredeintEnum.STEAMED_MILK);
     }
 
 
-    public void registerIngredient(IngredeintEnum ingredeintEnum , CoffeeIngredients ingredient){
-        ingredientsMap.put(ingredeintEnum,ingredient);
+    public void registerIngredient(IngredeintEnum ingredeintEnum){
+        ingredientsMap.add(ingredeintEnum);
     }
 
     public CoffeeIngredients createCoffeeIngredient(IngredeintEnum ingredeintEnum){
-            for(Map.Entry<IngredeintEnum,CoffeeIngredients> map : ingredientsMap.entrySet()){
-                if(map.getKey().getName().equals(ingredeintEnum.getName())){
-                    return ingredientsMap.get(ingredeintEnum);
+            for(IngredeintEnum ingredeintEnumValue : ingredientsMap){
+                if(ingredeintEnumValue.getName().equals(ingredeintEnum.getName())){
+                    return ingredeintEnumValue.getNewInstance();
                 }
             }
             return null;
