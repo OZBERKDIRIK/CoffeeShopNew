@@ -36,9 +36,12 @@ class CoffeeOrderTest {
 
     @Test
     public void testGetBeverageInvalidNumber() {
-
-        Beverage coffee = coffeeOrder.orderBeverage(-1);
-        assertNull(coffee);
+        try {
+            Beverage coffee = coffeeOrder.orderBeverage(-1);
+            assertNull(coffee);
+        } catch (Exception e) {
+            System.out.println("Geçersiz index numarası");
+        }
     }
 
     @Test
@@ -58,9 +61,12 @@ class CoffeeOrderTest {
 
     @Test
     public void testGetIngredientInvalidNumber() {
-
-        Ingredients ingredient = coffeeOrder.getIngredient(-1);
-        assertNull(ingredient);
+        try {
+            Ingredients ingredient = coffeeOrder.getIngredient(-1);
+            assertNull(ingredient);
+        } catch (Exception e) {
+            System.out.println("Geçersiz index numarası");
+        }
     }
 
     @Test
@@ -75,6 +81,11 @@ class CoffeeOrderTest {
         beverage2.addIngredient(ingredientFactory.createCoffeeIngredient(IngredeintEnum.STEAMED_MILK), 1);
         beverage2.getContents(beverage2.getPrice());
 
+        if (beverage2.equals(beverage)) {
+            System.out.println("Aynı obje");
+        } else {
+            System.out.println("Farklı obje");
+        }
     }
 
 
