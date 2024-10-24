@@ -2,15 +2,12 @@ package org.app;
 
 import org.coffee.*;
 import org.factory.CoffeeEnum;
-import org.factory.CoffeeFactory;
+import org.factory.coffeefactory.CoffeeFactory;
 import org.factory.IngredeintEnum;
 import org.factory.IngredientFactory;
-import org.ingredients.CoffeeIngredients;
 import org.ingredients.Ingredients;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 
 public class CoffeeOrderManager implements Order{

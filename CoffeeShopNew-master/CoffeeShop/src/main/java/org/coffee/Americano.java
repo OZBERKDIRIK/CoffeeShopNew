@@ -4,7 +4,7 @@ import org.ingredients.Espresso;
 import org.ingredients.HotWater;
 
 
-public class Americano extends Coffee{
+public class Americano extends Coffee {
     public Americano() {
         super("Americano");
         Espresso espresso = new Espresso();

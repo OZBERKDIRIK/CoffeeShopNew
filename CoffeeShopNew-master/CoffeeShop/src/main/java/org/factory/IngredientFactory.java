@@ -8,7 +8,7 @@ import java.util.List;
 
 
 public class IngredientFactory {
-    private final List<IngredeintEnum> ingredientsMap;
+    private  List<IngredeintEnum> ingredientsMap;
 
     public IngredientFactory() {
         ingredientsMap=new ArrayList<>();
