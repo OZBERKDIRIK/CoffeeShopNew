@@ -4,6 +4,7 @@ import org.coffee.Beverage;
 import org.factory.coffeefactory.CoffeeEnum;
 import org.factory.ingredientfactory.IngredeintEnum;
 import org.factory.ingredientfactory.IngredientFactoryService;
+import org.factory.ingredientfactory.IngredientFactoryStrategy;
 import org.ingredients.Ingredients;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -73,12 +74,18 @@ class CoffeeOrderTest {
     public void denemeTest() {
         Beverage beverage = coffeeOrder.orderBeverage(CoffeeEnum.DEFAULT.getIndex());
         IngredientFactoryService ingredientFactory = new IngredientFactoryService();
-        beverage.addIngredient(ingredientFactory.createCoffeeIngredient(IngredeintEnum.HOT_CHOCOLATE), 2);
+        IngredientFactoryStrategy ingredientStrategy = ingredientFactory.getIngredientStrategy(IngredeintEnum.HOT_CHOCOLATE);
+
+        beverage.addIngredient(ingredientStrategy.createIngredient(), 2);
         beverage.getContents(beverage.getPrice());
 
         Beverage beverage2 = coffeeOrder.orderBeverage(CoffeeEnum.DEFAULT.getIndex());
-        beverage2.addIngredient(ingredientFactory.createCoffeeIngredient(IngredeintEnum.ESPRESSO), 2);
-        beverage2.addIngredient(ingredientFactory.createCoffeeIngredient(IngredeintEnum.STEAMED_MILK), 1);
+        ingredientStrategy = ingredientFactory.getIngredientStrategy(IngredeintEnum.ESPRESSO);
+
+        beverage2.addIngredient(ingredientStrategy.createIngredient(), 2);
+
+        ingredientStrategy = ingredientFactory.getIngredientStrategy(IngredeintEnum.STEAMED_MILK);
+        beverage2.addIngredient(ingredientStrategy.createIngredient(), 1);
         beverage2.getContents(beverage2.getPrice());
 
         if (beverage2.equals(beverage)) {

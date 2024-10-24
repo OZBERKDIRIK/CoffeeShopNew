@@ -1,17 +1,12 @@
 package org.factory.ingredientfactory;
 
-import org.factory.coffeefactory.CoffeeEnum;
-import org.factory.coffeefactory.CoffeeFactoryStrategy;
-import org.ingredients.*;
-
-
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.Objects;
 
 
 public class IngredientFactoryService {
-    private  final Map<IngredeintEnum , IngredientStrategy> ingredientsMap;
+    private  final Map<IngredeintEnum , IngredientFactoryStrategy> ingredientsMap;
 
     public IngredientFactoryService() {
         ingredientsMap=new EnumMap<>(IngredeintEnum.class);
@@ -23,13 +18,13 @@ public class IngredientFactoryService {
     }
 
 
-    public void registerIngredient(IngredeintEnum ingredeintEnum , IngredientStrategy ingredientStrategy)
+    public void registerIngredient(IngredeintEnum ingredeintEnum , IngredientFactoryStrategy ingredientStrategy)
     {
         ingredientsMap.put(ingredeintEnum,ingredientStrategy);
     }
 
-    public IngredientStrategy getCoffeeStrategy(IngredeintEnum ingredeintEnum) {
-        IngredientStrategy ingredient = ingredientsMap.get(ingredeintEnum);
+    public IngredientFactoryStrategy getIngredientStrategy(IngredeintEnum ingredeintEnum) {
+        IngredientFactoryStrategy ingredient = ingredientsMap.get(ingredeintEnum);
 
         if (Objects.isNull(ingredient))
             throw new IllegalArgumentException("Strategy bulunamadı");

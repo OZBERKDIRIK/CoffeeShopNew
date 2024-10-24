@@ -6,6 +6,8 @@ import org.factory.ingredientfactory.IngredeintEnum;
 import org.factory.ingredientfactory.IngredientFactoryService;
 import org.factory.coffeefactory.CoffeeFactoryService;
 import org.factory.coffeefactory.CoffeeFactoryStrategy;
+import org.factory.ingredientfactory.IngredientFactoryStrategy;
+import org.ingredients.CoffeeIngredients;
 import org.ingredients.Ingredients;
 
 import java.util.*;
@@ -56,18 +58,21 @@ public class CoffeeOrderManager implements Order{
     {
         String ingredientList="";
         for(IngredeintEnum ingredientEnum :coffeeIngredientsEnumList){
-            Ingredients ingredients =ingredientFactory.createCoffeeIngredient(ingredientEnum);
-            ingredientList = ingredientList+ingredientEnum.getIndex() +" --- "+ingredientEnum.getName()+" --- Fiyatı : "+ingredients.getPrice() +"\n";
+            ingredientList = ingredientList+ingredientEnum.getIndex() +" --- "+ingredientEnum.getName()+" --- Fiyatı : "+ingredientEnum.getPrice() +"\n";
         }
         return ingredientList;
     }
 
     @Override
     public Ingredients getIngredient(int number) {
-        int index = number -1 ;
-        IngredeintEnum ingredientEnum =  coffeeIngredientsEnumList.get(index);
-        Ingredients ingredient = ingredientFactory.createCoffeeIngredient(ingredientEnum);
-        return ingredient;
+        for(IngredeintEnum ingredeintEnum : coffeeIngredientsEnumList){
+            if(ingredeintEnum.getIndex()==number){
+                IngredientFactoryStrategy ingredientStrategy = ingredientFactory.getIngredientStrategy(ingredeintEnum);
+                Ingredients ingredients = ingredientStrategy.createIngredient();
+                return ingredients;
+            }
+        }
+        return null;
     }
 
 
@@ -81,6 +86,7 @@ public class CoffeeOrderManager implements Order{
 
     public void addIngredientToCoffeeIngredientList(){
         IngredeintEnum[] ingredeintEnums = IngredeintEnum.values();
+        Arrays.sort(ingredeintEnums, Comparator.comparing(IngredeintEnum::getIndex));
         for(IngredeintEnum ingredeintEnum :ingredeintEnums){
             coffeeIngredientsEnumList.add(ingredeintEnum);
         }
