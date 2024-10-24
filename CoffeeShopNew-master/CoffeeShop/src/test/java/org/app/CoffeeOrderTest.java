@@ -1,9 +1,9 @@
 package org.app;
 
 import org.coffee.Beverage;
-import org.factory.CoffeeEnum;
-import org.factory.IngredeintEnum;
-import org.factory.IngredientFactory;
+import org.factory.coffeefactory.CoffeeEnum;
+import org.factory.ingredientfactory.IngredeintEnum;
+import org.factory.ingredientfactory.IngredientFactoryService;
 import org.ingredients.Ingredients;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -72,7 +72,7 @@ class CoffeeOrderTest {
     @Test
     public void denemeTest() {
         Beverage beverage = coffeeOrder.orderBeverage(CoffeeEnum.DEFAULT.getIndex());
-        IngredientFactory ingredientFactory = new IngredientFactory();
+        IngredientFactoryService ingredientFactory = new IngredientFactoryService();
         beverage.addIngredient(ingredientFactory.createCoffeeIngredient(IngredeintEnum.HOT_CHOCOLATE), 2);
         beverage.getContents(beverage.getPrice());
 

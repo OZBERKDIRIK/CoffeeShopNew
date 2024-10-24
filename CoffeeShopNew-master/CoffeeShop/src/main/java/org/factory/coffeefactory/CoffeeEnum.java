@@ -1,4 +1,4 @@
-package org.factory;
+package org.factory.coffeefactory;
 
 import org.coffee.*;
 

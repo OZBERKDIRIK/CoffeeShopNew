@@ -1,9 +1,9 @@
 package org.app;
 
 import org.coffee.*;
-import org.factory.CoffeeEnum;
-import org.factory.IngredeintEnum;
-import org.factory.IngredientFactory;
+import org.factory.coffeefactory.CoffeeEnum;
+import org.factory.ingredientfactory.IngredeintEnum;
+import org.factory.ingredientfactory.IngredientFactoryService;
 import org.factory.coffeefactory.CoffeeFactoryService;
 import org.factory.coffeefactory.CoffeeFactoryStrategy;
 import org.ingredients.Ingredients;
@@ -13,7 +13,7 @@ import java.util.*;
 public class CoffeeOrderManager implements Order{
 
     CoffeeFactoryService coffeeFactory;
-    IngredientFactory ingredientFactory;
+    IngredientFactoryService ingredientFactory;
     List<CoffeeEnum> coffeeEnumList;
     List<IngredeintEnum> coffeeIngredientsEnumList;
 
@@ -26,7 +26,7 @@ public class CoffeeOrderManager implements Order{
         addIngredientToCoffeeIngredientList();
 
         coffeeFactory = new CoffeeFactoryService();
-        ingredientFactory=new IngredientFactory();
+        ingredientFactory=new IngredientFactoryService();
     }
 
     @Override

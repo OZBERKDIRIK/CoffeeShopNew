@@ -1,8 +1,5 @@
 package org.factory.coffeefactory;
 
-import org.coffee.*;
-import org.factory.CoffeeEnum;
-
 import java.util.*;
 
 public  class CoffeeFactoryService {
