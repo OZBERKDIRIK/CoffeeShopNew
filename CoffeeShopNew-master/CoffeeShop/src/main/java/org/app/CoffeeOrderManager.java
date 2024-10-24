@@ -2,17 +2,17 @@ package org.app;
 
 import org.coffee.*;
 import org.factory.CoffeeEnum;
-import org.factory.coffeefactory.CoffeeFactory;
 import org.factory.IngredeintEnum;
 import org.factory.IngredientFactory;
+import org.factory.coffeefactory.CoffeeFactoryService;
+import org.factory.coffeefactory.CoffeeFactoryStrategy;
 import org.ingredients.Ingredients;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class CoffeeOrderManager implements Order{
 
-    CoffeeFactory coffeeFactory;
+    CoffeeFactoryService coffeeFactory;
     IngredientFactory ingredientFactory;
     List<CoffeeEnum> coffeeEnumList;
     List<IngredeintEnum> coffeeIngredientsEnumList;
@@ -25,7 +25,7 @@ public class CoffeeOrderManager implements Order{
         coffeeIngredientsEnumList=new ArrayList<>();
         addIngredientToCoffeeIngredientList();
 
-        coffeeFactory = new CoffeeFactory();
+        coffeeFactory = new CoffeeFactoryService();
         ingredientFactory=new IngredientFactory();
     }
 
@@ -33,18 +33,22 @@ public class CoffeeOrderManager implements Order{
     public String getBeverageList() {
         String coffeeList="";
         for(CoffeeEnum coffeeEnum :coffeeEnumList){
-            Beverage coffee = coffeeFactory.createCoffee(coffeeEnum);
-            coffeeList = coffeeList+coffeeEnum.getIndex() +" --- "+ coffeeEnum.getName()+"--- Fiyatı: "+coffee.getPrice() +"\n";
+
+            coffeeList = coffeeList+coffeeEnum.getIndex() +" --- "+ coffeeEnum.getName()+"--- Fiyatı: "+coffeeEnum.getPrice() +"\n";
         }
         return coffeeList;
     }
 
     @Override
     public Beverage orderBeverage(int number) {
-        int index = number -1 ;
-        CoffeeEnum coffeeEnum =  coffeeEnumList.get(index);
-        Beverage coffee = coffeeFactory.createCoffee(coffeeEnum);
-        return coffee;
+        for(CoffeeEnum coffeeEnum :coffeeEnumList){
+            if(coffeeEnum.getIndex()==number){
+                CoffeeFactoryStrategy coffeeStrategy = coffeeFactory.getCoffeeStrategy(coffeeEnum);
+                Coffee coffee = coffeeStrategy.createCoffee();
+                return coffee;
+            }
+        }
+        return null;
     }
 
     @Override
@@ -69,10 +73,10 @@ public class CoffeeOrderManager implements Order{
 
     public void addCoffeeToCoffeeEnumList (){
         CoffeeEnum[] coffeeEnums = CoffeeEnum.values();
+        Arrays.sort(coffeeEnums, Comparator.comparing(CoffeeEnum::getIndex));
         for(CoffeeEnum coffeeEnum :coffeeEnums){
             coffeeEnumList.add(coffeeEnum);
         }
-
     }
 
     public void addIngredientToCoffeeIngredientList(){

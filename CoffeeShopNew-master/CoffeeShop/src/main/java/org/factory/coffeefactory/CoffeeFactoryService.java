@@ -5,13 +5,13 @@ import org.factory.CoffeeEnum;
 
 import java.util.*;
 
-public  class CoffeeFactory {
+public  class CoffeeFactoryService {
 
     //Map içerisinde bir enum key value-object olsun
     //Bu mape eleman ekleme metodu olsun
     private final Map<CoffeeEnum, CoffeeFactoryStrategy> coffeeList = new EnumMap<>(CoffeeEnum.class);
 
-    public CoffeeFactory() {
+    public CoffeeFactoryService() {
         registerCoffee(CoffeeEnum.AMERICANO,new AmericanoFactory());
         registerCoffee(CoffeeEnum.ESPRESSO , new EspressoFactory() ) ;
         registerCoffee(CoffeeEnum.CAFFEE_LATE , new CaffeeLateFactory());
@@ -26,7 +26,11 @@ public  class CoffeeFactory {
 
     }
 
-    public Coffee createCoffee(CoffeeEnum coffeeEnum){
-        return null;
+    public CoffeeFactoryStrategy getCoffeeStrategy(CoffeeEnum coffeeEnum) {
+        CoffeeFactoryStrategy coffee = coffeeList.get(coffeeEnum);
+
+        if (Objects.isNull(coffee))
+            throw new IllegalArgumentException("Strategy bulunamadı");
+        return coffee;
     }
 }
