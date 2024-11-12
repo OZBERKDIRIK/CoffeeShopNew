@@ -1,8 +1,9 @@
 package org.coffee;
 
 
-import org.ingredients.CoffeeIngredients;
-import org.ingredients.Ingredients;
+import org.ingredients.Espresso;
+import org.ingredients.HotWater;
+import org.ingredients.Ingredient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,39 +14,18 @@ import java.io.PrintStream;
 
 public class CoffeeTest {
 
-    private Coffee coffee;
-    private Ingredients espresso;
-    private Ingredients hotWater;
+    private NewBeverage coffee;
+    private Ingredient espresso;
+    private Ingredient hotWater;
 
     // Setup - Testlerin öncesinde çalışır
     @BeforeEach
     public void setUp() {
-        coffee = new Coffee("Test Coffee") {
-        };
+        coffee = new NewBeverage("Test Coffee", 100);
 
-        espresso = new CoffeeIngredients() {
-            @Override
-            public String getName() {
-                return "Espresso";
-            }
+        espresso = new Espresso();
 
-            @Override
-            public int getPrice() {
-                return 10;
-            }
-        };
-
-        hotWater = new CoffeeIngredients() {
-            @Override
-            public String getName() {
-                return "Hot Water";
-            }
-
-            @Override
-            public int getPrice() {
-                return 2;
-            }
-        };
+        hotWater = new HotWater();
     }
 
     // addIngredient metodunu test eder
@@ -69,7 +49,7 @@ public class CoffeeTest {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
 
-        coffee.getContents(coffee.getPrice());
+        System.out.println(coffee);
 
         String expectedOutput = "Test Coffee içerisinde ---> 2 doz Hot Water içermektedir. 1 doz Espresso içermektedir. Toplam Fiyat : 14";
 

@@ -1,11 +1,11 @@
 package org.factory.coffeefactory;
 
 import org.coffee.CaffeeLate;
-import org.coffee.Coffee;
+import org.coffee.NewBeverage;
 
 public class CaffeeLateFactory implements CoffeeFactoryStrategy {
     @Override
-    public Coffee createCoffee() {
+    public NewBeverage createCoffee() {
         return new CaffeeLate();
     }
 }

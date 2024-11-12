@@ -1,94 +1,78 @@
 package org.app;
 
-import org.coffee.*;
-import org.factory.coffeefactory.CoffeeEnum;
-import org.factory.ingredientfactory.IngredeintEnum;
-import org.factory.ingredientfactory.IngredientFactoryService;
+import org.coffee.NewBeverage;
+import org.factory.coffeefactory.CoffeeType;
+import org.factory.ingredientfactory.IngredientType;
 import org.factory.coffeefactory.CoffeeFactoryService;
 import org.factory.coffeefactory.CoffeeFactoryStrategy;
-import org.factory.ingredientfactory.IngredientFactoryStrategy;
-import org.ingredients.CoffeeIngredients;
-import org.ingredients.Ingredients;
+import org.ingredients.Ingredient;
 
 import java.util.*;
 
-public class CoffeeOrderManager implements Order{
+public class CoffeeOrderManager{
 
     CoffeeFactoryService coffeeFactory;
-    IngredientFactoryService ingredientFactory;
-    List<CoffeeEnum> coffeeEnumList;
-    List<IngredeintEnum> coffeeIngredientsEnumList;
+    List<IngredientType> coffeeIngredientsList;
+    List<CoffeeType> coffeeList;
+    public CoffeeOrderManager(CoffeeFactoryService cfs){
+        coffeeFactory = cfs;
 
-    public CoffeeOrderManager(){
-        coffeeEnumList=new ArrayList<>();
-        addCoffeeToCoffeeEnumList();
+        coffeeList = new ArrayList<>();
+        addCoffeeToCoffeeList();
 
-
-        coffeeIngredientsEnumList=new ArrayList<>();
+        coffeeIngredientsList = new ArrayList<>();
         addIngredientToCoffeeIngredientList();
-
-        coffeeFactory = new CoffeeFactoryService();
-        ingredientFactory=new IngredientFactoryService();
     }
 
-    @Override
-    public String getBeverageList() {
-        String coffeeList="";
-        for(CoffeeEnum coffeeEnum :coffeeEnumList){
-
-            coffeeList = coffeeList+coffeeEnum.getIndex() +" --- "+ coffeeEnum.getName()+"--- Fiyatı: "+coffeeEnum.getPrice() +"\n";
-        }
-        return coffeeList;
-    }
-
-    @Override
-    public Beverage orderBeverage(int number) {
-        for(CoffeeEnum coffeeEnum :coffeeEnumList){
-            if(coffeeEnum.getIndex()==number){
-                CoffeeFactoryStrategy coffeeStrategy = coffeeFactory.getCoffeeStrategy(coffeeEnum);
-                Coffee coffee = coffeeStrategy.createCoffee();
-                return coffee;
+    public NewBeverage orderBeverage(int number) {
+        Map<CoffeeType , CoffeeFactoryStrategy> CoffeeMap  = coffeeFactory.getCoffeeList();
+        for( Map.Entry<CoffeeType, CoffeeFactoryStrategy> map :CoffeeMap.entrySet()){
+            if(map.getKey().getIndex()==number){
+                return map.getValue().createCoffee();
             }
         }
-        return null;
+      throw new IllegalArgumentException("İlgili index numarasında bir kahve yoktur ");
     }
 
-    @Override
-    public String getIngredientList()
+    public String toStringCoffeeList() {
+        String coffeeListInfo="";
+        for(CoffeeType coffeeType :coffeeList){
+            NewBeverage coffee = coffeeType.getCoffee();
+             coffeeListInfo=coffeeListInfo+" " + coffeeType.getIndex() + " Kahve: " + coffee.getName()+ " ----> " + " Fiyatı : " + coffee.getPrice() +"\n";
+        }
+        return coffeeListInfo;
+    }
+
+    public String toStringIngredientList()
     {
         String ingredientList="";
-        for(IngredeintEnum ingredientEnum :coffeeIngredientsEnumList){
-            ingredientList = ingredientList+ingredientEnum.getIndex() +" --- "+ingredientEnum.getName()+" --- Fiyatı : "+ingredientEnum.getPrice() +"\n";
+        for(IngredientType ingredientEnum :coffeeIngredientsList){
+            Ingredient ingredient = ingredientEnum.getIngredient();
+            ingredientList = ingredientList+ingredientEnum.getIndex() +" --- "+ingredient.getName()+" --- Fiyatı : "+ingredient.getPrice() +"\n";
         }
         return ingredientList;
     }
 
-    @Override
-    public Ingredients getIngredient(int number) {
-        for(IngredeintEnum ingredeintEnum : coffeeIngredientsEnumList){
-            if(ingredeintEnum.getIndex()==number){
-                IngredientFactoryStrategy ingredientStrategy = ingredientFactory.getIngredientStrategy(ingredeintEnum);
-                Ingredients ingredients = ingredientStrategy.createIngredient();
-                return ingredients;
-            }
-        }
-        return null;
+    public Ingredient getIngredient(int number) {
+        Ingredient ingredient= IngredientType.getIngredient(number);
+        return  ingredient;
+
     }
 
 
-    public void addCoffeeToCoffeeEnumList (){
-        CoffeeEnum[] coffeeEnums = CoffeeEnum.values();
-        Arrays.sort(coffeeEnums, Comparator.comparing(CoffeeEnum::getIndex));
-        for(CoffeeEnum coffeeEnum :coffeeEnums){
-            coffeeEnumList.add(coffeeEnum);
+    public void addCoffeeToCoffeeList (){
+        CoffeeType[] coffeeTypes = CoffeeType.values();
+        Arrays.sort(coffeeTypes, Comparator.comparing(CoffeeType::getIndex));
+        for(CoffeeType coffeeType :coffeeTypes){
+            coffeeList.add(coffeeType);
         }
     }
 
     public void addIngredientToCoffeeIngredientList(){
-        IngredeintEnum[] ingredeintEnums = IngredeintEnum.values();
-        Arrays.sort(ingredeintEnums, Comparator.comparing(IngredeintEnum::getIndex));
-        for(IngredeintEnum ingredeintEnum :ingredeintEnums){
-            coffeeIngredientsEnumList.add(ingredeintEnum);
+        IngredientType[] ingredeintEnums = IngredientType.values();
+        Arrays.sort(ingredeintEnums, Comparator.comparing(IngredientType::getIndex));
+        for(IngredientType ingredeintEnum :ingredeintEnums){
+            coffeeIngredientsList.add(ingredeintEnum);
         }
     }
 }

@@ -1,12 +1,12 @@
 package org.factory.coffeefactory;
 
-import org.coffee.Coffee;
 import org.coffee.Mocha;
+import org.coffee.NewBeverage;
 
 public class MochaFactory implements CoffeeFactoryStrategy{
 
     @Override
-    public Coffee createCoffee() {
+    public NewBeverage createCoffee() {
         return new Mocha();
     }
 }

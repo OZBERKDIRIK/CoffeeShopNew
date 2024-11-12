@@ -1,21 +1,19 @@
 package org.coffee;
 
+import org.factory.ingredientfactory.IngredientType;
 import org.ingredients.Espresso;
 import org.ingredients.HotWater;
 import org.ingredients.MilkFoam;
 import org.ingredients.SteamedMilk;
 
-public class Cappuccino extends Coffee{
+public class Cappuccino extends NewBeverage{
     public Cappuccino() {
-        super("Cappucino");
-        Espresso espresso = new Espresso();
-        addIngredient(espresso,1);
+        super("Cappucino" , 32);
+        addIngredient(new Espresso(),1);
 
-        SteamedMilk steamedMilk = new SteamedMilk();
-        addIngredient(steamedMilk,2);
+        addIngredient(new SteamedMilk(),2);
 
-        MilkFoam milkFoam = new MilkFoam();
-        addIngredient(milkFoam,2);
+        addIngredient(new MilkFoam() , 2);
 
 
     }

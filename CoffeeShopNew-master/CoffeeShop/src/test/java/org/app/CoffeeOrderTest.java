@@ -1,44 +1,55 @@
 package org.app;
 
-import org.coffee.Beverage;
-import org.factory.coffeefactory.CoffeeEnum;
-import org.factory.ingredientfactory.IngredeintEnum;
-import org.factory.ingredientfactory.IngredientFactoryService;
-import org.factory.ingredientfactory.IngredientFactoryStrategy;
-import org.ingredients.Ingredients;
+import org.coffee.NewBeverage;
+import org.factory.coffeefactory.AmericanoFactory;
+import org.factory.coffeefactory.CoffeeFactoryService;
+import org.factory.coffeefactory.CoffeeFactoryStrategy;
+import org.factory.coffeefactory.CoffeeType;
+import org.factory.ingredientfactory.IngredientType;
+import org.ingredients.Ingredient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+
+import java.util.HashMap;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class CoffeeOrderTest {
 
     private CoffeeOrderManager coffeeOrder;
+    private static CoffeeFactoryService mockService;
 
     @BeforeEach
     public void setUp() {
-        coffeeOrder = new CoffeeOrderManager();
+        mockService = mock();
+        coffeeOrder = new CoffeeOrderManager(mockService);
     }
 
     @Test
     public void testWriteBeverageList() {
 
         assertNotNull(coffeeOrder);
-        assertFalse(coffeeOrder.coffeeEnumList.isEmpty());
+        assertFalse(coffeeOrder.coffeeList.isEmpty());
     }
 
     @Test
     public void testGetBeverageValidNumber() {
+        HashMap coffeelist = new HashMap<CoffeeType, CoffeeFactoryStrategy>();
+        coffeelist.put(CoffeeType.AMERICANO, new AmericanoFactory());
+        when(mockService.getCoffeeList()).thenReturn(coffeelist);
 
-        Beverage coffee = coffeeOrder.orderBeverage(2);
+        NewBeverage coffee = coffeeOrder.orderBeverage(1);
+        verify(mockService, times(1)).getCoffeeList();
         assertNotNull(coffee);
-        assertEquals(CoffeeEnum.ESPRESSO.getName(), coffee.getName());
+        assertEquals(CoffeeType.AMERICANO.getCoffee().getName(), coffee.getName());
     }
 
     @Test
     public void testGetBeverageInvalidNumber() {
         try {
-            Beverage coffee = coffeeOrder.orderBeverage(-1);
+            NewBeverage coffee = coffeeOrder.orderBeverage(-1);
             assertNull(coffee);
         } catch (Exception e) {
             System.out.println("Geçersiz index numarası");
@@ -49,21 +60,21 @@ class CoffeeOrderTest {
     public void testWriteIngredientList() {
 
         assertNotNull(coffeeOrder);
-        assertFalse(coffeeOrder.coffeeIngredientsEnumList.isEmpty());
+        assertFalse(coffeeOrder.coffeeIngredientsList.isEmpty());
     }
 
     @Test
     public void testGetIngredientValidNumber() {
 
-        Ingredients ingredient = coffeeOrder.getIngredient(1);
+        Ingredient ingredient = coffeeOrder.getIngredient(1);
         assertNotNull(ingredient);
-        assertEquals(IngredeintEnum.ESPRESSO.getName(), ingredient.getName());
+        assertEquals(IngredientType.ESPRESSO.getIngredient().getName(), ingredient.getName());
     }
 
     @Test
     public void testGetIngredientInvalidNumber() {
         try {
-            Ingredients ingredient = coffeeOrder.getIngredient(-1);
+            Ingredient ingredient = coffeeOrder.getIngredient(-1);
             assertNull(ingredient);
         } catch (Exception e) {
             System.out.println("Geçersiz index numarası");
@@ -72,21 +83,16 @@ class CoffeeOrderTest {
 
     @Test
     public void denemeTest() {
-        Beverage beverage = coffeeOrder.orderBeverage(CoffeeEnum.DEFAULT.getIndex());
-        IngredientFactoryService ingredientFactory = new IngredientFactoryService();
-        IngredientFactoryStrategy ingredientStrategy = ingredientFactory.getIngredientStrategy(IngredeintEnum.HOT_CHOCOLATE);
+        NewBeverage beverage = coffeeOrder.orderBeverage(CoffeeType.CUSTOM_BEVERAGE.getIndex());
 
-        beverage.addIngredient(ingredientStrategy.createIngredient(), 2);
-        beverage.getContents(beverage.getPrice());
+        beverage.addIngredient(IngredientType.HOT_CHOCOLATE.getIngredient(), 2);
+        System.out.println(beverage);
 
-        Beverage beverage2 = coffeeOrder.orderBeverage(CoffeeEnum.DEFAULT.getIndex());
-        ingredientStrategy = ingredientFactory.getIngredientStrategy(IngredeintEnum.ESPRESSO);
+        NewBeverage beverage2 = coffeeOrder.orderBeverage(CoffeeType.CUSTOM_BEVERAGE.getIndex());
 
-        beverage2.addIngredient(ingredientStrategy.createIngredient(), 2);
 
-        ingredientStrategy = ingredientFactory.getIngredientStrategy(IngredeintEnum.STEAMED_MILK);
-        beverage2.addIngredient(ingredientStrategy.createIngredient(), 1);
-        beverage2.getContents(beverage2.getPrice());
+        beverage2.addIngredient(IngredientType.ESPRESSO.getIngredient(), 2);
+        System.out.println(beverage2);
 
         if (beverage2.equals(beverage)) {
             System.out.println("Aynı obje");

@@ -1,17 +1,16 @@
 package org.coffee;
 
+import org.factory.ingredientfactory.IngredientType;
 import org.ingredients.Espresso;
 import org.ingredients.HotWater;
 
 
-public class Americano extends Coffee {
+public class Americano extends NewBeverage {
     public Americano() {
-        super("Americano");
-        Espresso espresso = new Espresso();
-        addIngredient(espresso,1);
+        super("Americano",18);
+        addIngredient(new Espresso() ,1);
 
-        HotWater hotWater = new HotWater();
-        addIngredient(hotWater,4);
+        addIngredient(new HotWater(),4);
 
     }
 }

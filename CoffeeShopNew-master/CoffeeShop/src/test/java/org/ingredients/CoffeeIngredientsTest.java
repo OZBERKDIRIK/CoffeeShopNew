@@ -6,11 +6,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class CoffeeIngredientsTest {
 
-    private CoffeeIngredients coffeeIngredient;
+    private Ingredient coffeeIngredient;
 
     @BeforeEach
     public void setUp() {
-        coffeeIngredient = new CoffeeIngredients("Espresso", 5);
+        coffeeIngredient=new Ingredient("Espresso", 5);
     }
 
     @Test
@@ -37,25 +37,25 @@ public class CoffeeIngredientsTest {
 
     @Test
     public void testEqualsSameObject() {
-        CoffeeIngredients sameIngredient = new CoffeeIngredients("Espresso", 5);
+        Ingredient sameIngredient = new Ingredient("Espresso", 5);
         assertTrue(coffeeIngredient.equals(sameIngredient));
     }
 
     @Test
     public void testEqualsDifferentName() {
-        CoffeeIngredients differentIngredient = new CoffeeIngredients("Latte", 5);
+        Ingredient differentIngredient = new Ingredient("Latte", 5);
         assertFalse(coffeeIngredient.equals(differentIngredient));
     }
 
     @Test
     public void testHashCodeSameName() {
-        CoffeeIngredients sameIngredient = new CoffeeIngredients("Espresso", 10);
+        Ingredient sameIngredient = new Ingredient("Espresso", 10);
         assertEquals(coffeeIngredient.hashCode(), sameIngredient.hashCode());
     }
 
     @Test
     public void testHashCodeDifferentName() {
-        CoffeeIngredients differentIngredient = new CoffeeIngredients("Latte", 10);
+        Ingredient differentIngredient = new Ingredient("Latte", 10);
         assertNotEquals(coffeeIngredient.hashCode(), differentIngredient.hashCode());
     }
 }
