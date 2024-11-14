@@ -34,7 +34,7 @@ public enum CoffeeType {
                 return type;
             }
         }
-        return null;
+        throw new IllegalArgumentException("Geçerli bir index girin. ");
     }
 
 }

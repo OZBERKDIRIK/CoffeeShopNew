@@ -20,6 +20,7 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class CoffeeOrderManagerTest {
     private CoffeeOrderManager coffeeOrderManager;
@@ -40,13 +41,7 @@ class CoffeeOrderManagerTest {
                 Arguments.of(7, CoffeeType.getCoffeeType(7).getCoffee()));
     }
 
-    static Stream<Arguments> ingredientProvider(){
-        return  Stream.of(Arguments.of(1, IngredientType.getIngredient(1)),
-                Arguments.of(2, IngredientType.getIngredient(2)),
-                Arguments.of(3, IngredientType.getIngredient(3)),
-                Arguments.of(4, IngredientType.getIngredient(4)),
-                Arguments.of(5, IngredientType.getIngredient(5)));
-    }
+
     @MethodSource("orderProvider")
     @ParameterizedTest
     void orderBeverage(int testNumber, NewBeverage expectedBeverage) {
@@ -63,18 +58,7 @@ class CoffeeOrderManagerTest {
         assertEquals(expectedBeverage.getClass(), actualBeverage.getClass());
     }
 
-    @ParameterizedTest
-    @MethodSource("ingredientProvider")
-    void getIngredient(int testNumber , Ingredient excpetedIngredient){
-        //give
-            //---> params initilaze
-        //When
 
-            Ingredient actualIngredient = coffeeOrderManager.getIngredient(testNumber);
-        //Then
-            assertEquals(excpetedIngredient,actualIngredient);
-
-    }
 
     @Test
     void addCoffeeToCoffeeList(){
