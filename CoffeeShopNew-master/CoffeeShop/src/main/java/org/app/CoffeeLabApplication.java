@@ -84,7 +84,7 @@ public class CoffeeLabApplication {
 
     }
 
-    private static void addIngredientsToCoffee(NewBeverage coffee, CoffeeOrderManager coffeeOrder, Scanner scanner) {
+    public static void addIngredientsToCoffee(NewBeverage coffee, CoffeeOrderManager coffeeOrder, Scanner scanner) {
         while (true) {
             System.out.println("Eklemeyi bitirmek istediğinizde q'ya basın : ");
             String ingredientList= coffeeOrder.toStringIngredientList();
