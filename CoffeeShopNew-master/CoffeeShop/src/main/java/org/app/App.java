@@ -1,17 +1,15 @@
 package org.app;
 
-import org.coffee.*;
-import org.factory.coffeefactory.CoffeeFactoryService;
-import org.ingredients.Ingredient;
+import org.factory.coffeefactory.CoffeeFactory;
 
 import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        CoffeeFactoryService factoryService = new CoffeeFactoryService();
+        CoffeeFactory factoryService = new CoffeeFactory();
         CoffeeOrderManager orderManager = new CoffeeOrderManager(factoryService);
-        CoffeeLabApplication coffeeApp = new CoffeeLabApplication(sc, factoryService, orderManager);
+        CoffeeLabApplication coffeeApp = new CoffeeLabApplication(sc, orderManager);
         coffeeApp.run();
     }
 }

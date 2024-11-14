@@ -3,7 +3,7 @@ package org.app;
 import org.coffee.NewBeverage;
 import org.factory.coffeefactory.CoffeeType;
 import org.factory.ingredientfactory.IngredientType;
-import org.factory.coffeefactory.CoffeeFactoryService;
+import org.factory.coffeefactory.CoffeeFactory;
 import org.factory.coffeefactory.CoffeeFactoryStrategy;
 import org.ingredients.Ingredient;
 
@@ -11,10 +11,10 @@ import java.util.*;
 
 public class CoffeeOrderManager{
 
-    CoffeeFactoryService coffeeFactory;
+    CoffeeFactory coffeeFactory;
     List<IngredientType> coffeeIngredientsList;
     List<CoffeeType> coffeeList;
-    public CoffeeOrderManager(CoffeeFactoryService cfs){
+    public CoffeeOrderManager(CoffeeFactory cfs){
         coffeeFactory = cfs;
 
         coffeeList = new ArrayList<>();

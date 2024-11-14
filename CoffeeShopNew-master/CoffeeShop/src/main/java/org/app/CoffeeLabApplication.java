@@ -2,19 +2,16 @@ package org.app;
 
 import org.coffee.CustomBeverage;
 import org.coffee.NewBeverage;
-import org.factory.coffeefactory.CoffeeFactoryService;
 import org.ingredients.Ingredient;
 
 import java.util.Scanner;
 
 public class CoffeeLabApplication {
     private final Scanner scanner;
-    private final CoffeeFactoryService service;
     private final CoffeeOrderManager coffeeOrder;
 
-    public CoffeeLabApplication(Scanner scanner, CoffeeFactoryService service, CoffeeOrderManager coffeeOrder) {
+    public CoffeeLabApplication(Scanner scanner, CoffeeOrderManager coffeeOrder) {
         this.scanner = scanner;
-        this.service = service;
         this.coffeeOrder = coffeeOrder;
     }
     public void run() {
@@ -32,7 +29,13 @@ public class CoffeeLabApplication {
                 break;
             }
 
-            selectionNumber = Integer.parseInt(selection);
+            try {
+                selectionNumber = Integer.parseInt(selection);
+            } catch (NumberFormatException e) {
+                System.out.println("Geçersiz tuşa bastınız!");
+                continue;
+            }
+
             coffee = coffeeOrder.orderBeverage(selectionNumber);
 
             if (coffee instanceof CustomBeverage) {
@@ -44,6 +47,7 @@ public class CoffeeLabApplication {
             }
         }
     }
+
     private static void handleCustomCoffee(NewBeverage coffee, CoffeeOrderManager coffeeOrder, Scanner scanner) {
         String ingredientList = coffeeOrder.toStringIngredientList();
         System.out.println(ingredientList);

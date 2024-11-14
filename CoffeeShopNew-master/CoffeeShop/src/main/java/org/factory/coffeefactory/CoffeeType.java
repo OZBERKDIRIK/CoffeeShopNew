@@ -4,8 +4,8 @@ import org.coffee.NewBeverage;
 import org.coffee.*;
 
 public enum CoffeeType {
-    AMERICANO(new Americano(), 1),
-    CAFFEE_LATE(new CaffeeLate(), 2) ,
+    AMERICANO(new Americano(), 2),
+    CAFFEE_LATE(new CaffeeLate(), 1) ,
     CAPPUCCINO(new Cappuccino() , 3) ,
     ESPRESSO(new Espresso(), 5) ,
     DOUBLE_ESPRESSO(new DoubleEspresso(), 6) ,
