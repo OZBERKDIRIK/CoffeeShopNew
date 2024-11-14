@@ -56,6 +56,7 @@ class CoffeeOrderManagerTest {
         //Then
             //Beklenen --- Gelen assertEquals
         assertEquals(expectedBeverage.getClass(), actualBeverage.getClass());
+        assertThrows(IllegalArgumentException.class , ()-> coffeeOrderManager.orderBeverage(15));
     }
 
 
