@@ -8,6 +8,8 @@ import java.util.Map;
 public  class NewBeverage {
     private float price; //base fiyat
     private String name;
+
+
     private Map<Ingredient, Integer> contetOfCoffee;
 
     protected NewBeverage(String name, float price) {
@@ -20,6 +22,10 @@ public  class NewBeverage {
     {
 
     }
+    public Map<Ingredient, Integer> getContetOfCoffee() {
+        return contetOfCoffee;
+    }
+
     public void addIngredient(Ingredient ingredient , int doses){
         if (contetOfCoffee.containsKey(ingredient)) {
             int currentDoses = contetOfCoffee.get(ingredient);
@@ -33,7 +39,12 @@ public  class NewBeverage {
     }
 
     public void setPrice(int price) {
-        this.price = price;
+        if(price>=0)
+        {
+            this.price=price;
+        }else{
+            throw new IllegalArgumentException("Fiyat negatif olamaz .... ");
+        }
     }
 
     public String getName() {

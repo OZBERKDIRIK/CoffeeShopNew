@@ -26,12 +26,11 @@ public class CoffeeOrderManager{
 
     public NewBeverage orderBeverage(int number) {
         Map<CoffeeType , CoffeeFactoryStrategy> CoffeeMap  = coffeeFactory.getCoffeeList();
-        for( Map.Entry<CoffeeType, CoffeeFactoryStrategy> map :CoffeeMap.entrySet()){
-            if(map.getKey().getIndex()==number){
-                return map.getValue().createCoffee();
-            }
+        CoffeeType coffeeType = CoffeeType.getCoffeeType(number);
+        if(coffeeType == null) {
+            throw new IllegalArgumentException("İlgili index numarasında bir kahve yoktur ");
         }
-      throw new IllegalArgumentException("İlgili index numarasında bir kahve yoktur ");
+        return CoffeeMap.get(coffeeType).createCoffee();
     }
 
     public String toStringCoffeeList() {

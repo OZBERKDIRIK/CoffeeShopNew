@@ -35,35 +35,53 @@ public class CoffeeLabApplication {
                 System.out.println("Geçersiz tuşa bastınız!");
                 continue;
             }
-
-            coffee = coffeeOrder.orderBeverage(selectionNumber);
+            try {
+                coffee = coffeeOrder.orderBeverage(selectionNumber);
+            }catch (IllegalArgumentException e){
+                System.out.println("Listeye uygun kahve numarası girin ");
+                continue;
+            }
 
             if (coffee instanceof CustomBeverage) {
-                handleCustomCoffee(coffee, coffeeOrder, scanner);
-                return;
+                try {
+                    handleCustomCoffee(coffee, coffeeOrder, scanner);
+                    return;
+                }catch (IllegalArgumentException e){
+                    System.out.println("Uygun bir deger giriniz  ");
+                    continue;
+                }
             } else {
-                handleRegularCoffee(coffee, coffeeOrder, scanner);
-                return;
+                try
+                {
+                    handleRegularCoffee(coffee, coffeeOrder, scanner);
+                    return;
+                }catch (IllegalArgumentException e){
+                    System.out.println("Uygun bir deger giriniz : ");
+                    continue;
+                }
+
+
             }
         }
     }
 
-    private static void handleCustomCoffee(NewBeverage coffee, CoffeeOrderManager coffeeOrder, Scanner scanner) {
+    private static void handleCustomCoffee(NewBeverage coffee, CoffeeOrderManager coffeeOrder, Scanner scanner) throws IllegalArgumentException{
         String ingredientList = coffeeOrder.toStringIngredientList();
         System.out.println(ingredientList);
         System.out.println("Kahvenize Koymak istediğiniz içerikleri seçin : ");
         addIngredientsToCoffee(coffee, coffeeOrder, scanner);
     }
 
-    private static void handleRegularCoffee(NewBeverage coffee, CoffeeOrderManager coffeeOrder, Scanner scanner) {
+    private static void handleRegularCoffee(NewBeverage coffee, CoffeeOrderManager coffeeOrder, Scanner scanner) throws IllegalArgumentException {
         System.out.println("Seçmiş olduğunuz " + coffee.getName() + " içeceğe ekstra içerik koymak ister misiniz? (e/h)");
         String selection = scanner.nextLine();
 
-        if (selection.equalsIgnoreCase("e")) {
-            addIngredientsToCoffee(coffee, coffeeOrder, scanner);
-        } else {
-            finalizeOrder(coffee);
-        }
+            if (selection.equalsIgnoreCase("e")) {
+                addIngredientsToCoffee(coffee, coffeeOrder, scanner);
+            } else {
+                finalizeOrder(coffee);
+            }
+
     }
 
     private static void addIngredientsToCoffee(NewBeverage coffee, CoffeeOrderManager coffeeOrder, Scanner scanner) {
@@ -78,20 +96,23 @@ public class CoffeeLabApplication {
                 finalizeOrder(coffee);
                 return;
             }
-
-            int selectionNumber = Integer.parseInt(selection);
-            Ingredient ingredients = coffeeOrder.getIngredient(selectionNumber);
-
-            System.out.println("Eklemek istediğiniz doz sayısını girin : ");
-            int dose = scanner.nextInt();
-            scanner.nextLine();
-            coffee.addIngredient(ingredients, dose);
+            int selectionNumber=0;
+            try{
+                selectionNumber = Integer.parseInt(selection);
+                Ingredient ingredients = coffeeOrder.getIngredient(selectionNumber);
+                System.out.println("Eklemek istediğiniz doz sayısını girin : ");
+                int dose = scanner.nextInt();
+                scanner.nextLine();
+                coffee.addIngredient(ingredients, dose);
+            }catch(NumberFormatException e){
+                System.out.println("Listeden uygun içerik numarasını girin . ");
+                continue;
+            }
         }
     }
 
     private static void finalizeOrder(NewBeverage coffee) {
         coffee.calculatePrice();
-        float price = coffee.getPrice();
         String contentsOfCoffee = coffee.toString();
         System.out.println(contentsOfCoffee);
         System.out.println("Afiyet Olsun .... ");
