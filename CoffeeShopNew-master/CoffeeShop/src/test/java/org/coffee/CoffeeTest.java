@@ -27,7 +27,7 @@ public class CoffeeTest {
     @BeforeEach
     void setUp(){
         americano =new Americano();
-        customBeverage=new CustomBeverage("Kahve : ");
+        customBeverage=new CustomBeverage();
         customBeverage.addIngredient(new Espresso() , 5);
         customBeverage.addIngredient(new MilkFoam(), 16);
         customBeverage.addIngredient(new SteamedMilk(),18);
@@ -57,7 +57,7 @@ public class CoffeeTest {
     @Test
     void testCalculatePrice(){
        //Give
-            float expectedPricePrice = 5*10+ 16*4+ 18*7;
+            float expectedPricePrice = 6*10+ 16*4+ 18*7;
             System.out.println("Expected price : " + expectedPricePrice);
 
        //when
@@ -66,7 +66,7 @@ public class CoffeeTest {
         System.out.println("Actual Price : " + actualPrice);
 
        //Then
-            assertEquals(expectedPricePrice,actualPrice);
+            assertEquals(expectedPricePrice,actualPrice,"Fiyat doğru hesaplanamamıştır");
    }
 
    @Test

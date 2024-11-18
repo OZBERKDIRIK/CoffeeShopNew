@@ -29,7 +29,7 @@ class CoffeeFactoryTest {
             Map<CoffeeType , CoffeeFactoryStrategy> expectedCoffeeList = coffeeFactory.getCoffeeList();
 
             //When
-          expectedCoffeeList.put(CoffeeType.CUSTOM_BEVERAGE , ()->new CustomBeverage("Sizin Kahveniz : "));
+          expectedCoffeeList.put(CoffeeType.CUSTOM_BEVERAGE , ()->new CustomBeverage());
           Map<CoffeeType , CoffeeFactoryStrategy > actualCoffeeList = coffeeFactory.getCoffeeList();
 
         //Then

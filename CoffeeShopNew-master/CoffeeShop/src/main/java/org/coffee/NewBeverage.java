@@ -34,37 +34,23 @@ public  class NewBeverage {
             contetOfCoffee.put(ingredient, doses);
         }
     }
-    public float getPrice() {
-        return price;
-    }
 
-    public void setPrice(int price) {
-        if(price>=0)
-        {
-            this.price=price;
-        }else{
-            throw new IllegalArgumentException("Fiyat negatif olamaz .... ");
-        }
-    }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public float getPrice(){
+        return  price;
     }
 
- public void calculatePrice(){
-        float sumOfCoffeePrice = 0f;
-     for(Map.Entry<Ingredient, Integer> map :contetOfCoffee.entrySet()){
-         float ingredientPrice = map.getKey().getPrice();
-         int doses = map.getValue();
-
-         sumOfCoffeePrice= sumOfCoffeePrice+ingredientPrice*doses + this.price;
-     }
-     this.price=sumOfCoffeePrice;
- }
+    public void setPrice(float price){
+        if(price <0){
+            throw new IllegalArgumentException("Uygun bir fiyat degeri biriniz.");
+        }else{
+            this.price=price;
+        }
+    }
 
     @Override
     public String toString(){
@@ -78,5 +64,4 @@ public  class NewBeverage {
 
         return coffeeInfo;
     }
-
 }

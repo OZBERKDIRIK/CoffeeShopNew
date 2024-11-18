@@ -15,7 +15,7 @@ public class CoffeeFactory {
         registerCoffee(CoffeeType.CAPPUCCINO,() -> new Cappuccino());
         registerCoffee(CoffeeType.DOUBLE_ESPRESSO, () -> new DoubleEspresso());
         registerCoffee(CoffeeType.MOCHA, () -> new Mocha());
-        registerCoffee(CoffeeType.CUSTOM_BEVERAGE, () -> new CustomBeverage("\"Sizin Kahveniz: \""));
+        registerCoffee(CoffeeType.CUSTOM_BEVERAGE, () -> new CustomBeverage());
     }
 
     public Map<CoffeeType, CoffeeFactoryStrategy> getCoffeeList() {

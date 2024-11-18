@@ -10,7 +10,7 @@ public enum CoffeeType {
     ESPRESSO(new Espresso(), 4) ,
     DOUBLE_ESPRESSO(new DoubleEspresso(), 5) ,
     MOCHA(new Mocha(), 6) ,
-    CUSTOM_BEVERAGE(new CustomBeverage("Olusturulan Kahve ") ,7);
+    CUSTOM_BEVERAGE(new CustomBeverage() ,7);
     private final int index;
     private final NewBeverage coffee;
 
