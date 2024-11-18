@@ -1,30 +1,30 @@
 package org.app;
 
 import org.coffee.CustomBeverage;
-import org.coffee.NewBeverage;
+import org.coffee.Beverage;
 import org.ingredients.Ingredient;
 
 import java.util.Scanner;
 
 public class CoffeeLabApplication {
     private final Scanner scanner;
-    private final CoffeeOrderManager coffeeOrder;
-
-    private final CustomBeverage customBeverage;
-    public CoffeeLabApplication(Scanner scanner, CoffeeOrderManager coffeeOrder,CustomBeverage customBeverage) {
+    private final Menu coffeeOrder;
+   private  String selection;
+    private int selectionNumber;
+    private Beverage coffee;
+    public CoffeeLabApplication(Scanner scanner, Menu coffeeOrder) {
         this.scanner = scanner;
         this.coffeeOrder = coffeeOrder;
-        this.customBeverage=customBeverage;
+        this.selection="";
+        this.selectionNumber=0;
+        Beverage coffee=null;
     }
+
     public void run() {
-        String selection;
-        int selectionNumber;
-        NewBeverage coffee;
+
 
         while (true) {
-            String coffeeList = coffeeOrder.toStringCoffeeList();
-            System.out.println(coffeeList);
-            System.out.println("Seçmek istediğiniz kahve türünün numarasını girin çıkmak için q'ya basın : ");
+            coffeeOrder.printMenu();
             selection = scanner.nextLine();
 
             if (selection.equalsIgnoreCase("q")) {
@@ -34,80 +34,86 @@ public class CoffeeLabApplication {
                 selectionNumber = Integer.parseInt(selection);
             } catch (NumberFormatException e) {
                 System.out.println("Geçersiz tuşa bastınız!");
-                continue;
             }
             try {
                 coffee = coffeeOrder.orderBeverage(selectionNumber);
-            }catch (IllegalArgumentException e){
-                System.out.println("Listeye uygun kahve numarası girin ");
+            } catch (IllegalArgumentException e) {
+                System.out.println("Uygun bir deger giriniz! ");
                 continue;
             }
-
-            if (coffee instanceof CustomBeverage) {
+            boolean userPreferenceAmountIngredient = isAddIngredient();
+            if (userPreferenceAmountIngredient) {
                 try {
-                    handleCustomCoffee(customBeverage, coffeeOrder, scanner);
+                    handleCustomCoffee(coffee);
                     return;
-                }catch (IllegalArgumentException e){
-                    System.out.println("Uygun bir deger giriniz  ");
-                    continue;
+                } catch (IllegalArgumentException exception) {
+                    System.out.println("Uygun bir deger giriniz! ");
                 }
             } else {
-                try
-                {
+                try {
                     handleRegularCoffee(coffee);
                     return;
-                }catch (IllegalArgumentException e){
-                    System.out.println("Uygun bir deger giriniz : ");
-                    continue;
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Uygun bir deger giriniz! ");
                 }
-
 
             }
         }
     }
 
-    private static void handleCustomCoffee(CustomBeverage coffee, CoffeeOrderManager coffeeOrder, Scanner scanner) throws IllegalArgumentException{
-        String ingredientList = coffeeOrder.toStringIngredientList();
-        System.out.println(ingredientList);
-        System.out.println("Kahvenize Koymak istediğiniz içerikleri seçin : ");
-        addIngredientsToCoffee(coffee, coffeeOrder, scanner);
+    private void handleCustomCoffee(Beverage coffee) {
+        CustomBeverage customBeverage = new CustomBeverage(coffee);
+        addIngredientsToCoffee(customBeverage);
     }
 
-    private static void handleRegularCoffee(NewBeverage coffee) throws IllegalArgumentException {
+    private void handleRegularCoffee(Beverage coffee){
         System.out.println(coffee);
     }
 
-    public static void addIngredientsToCoffee(CustomBeverage coffee, CoffeeOrderManager coffeeOrder, Scanner scanner) {
+    public void addIngredientsToCoffee(CustomBeverage coffee) {
         while (true) {
-            System.out.println("Eklemeyi bitirmek istediğinizde q'ya basın : ");
-            String ingredientList= coffeeOrder.toStringIngredientList();
-            System.out.println(ingredientList);
-            System.out.println("Seçmek istediğiniz ek malzemenin listeden numarasını girin: ");
+            coffeeOrder.printIngredientMenu();
             String selection = scanner.nextLine();
-
             if (selection.equalsIgnoreCase("q")) {
                 finalizeOrder(coffee);
                 return;
             }
-            int selectionNumber=0;
-            try{
+            try {
                 selectionNumber = Integer.parseInt(selection);
                 Ingredient ingredients = coffeeOrder.getIngredient(selectionNumber);
+                int dose=0;
                 System.out.println("Eklemek istediğiniz doz sayısını girin : ");
-                int dose = scanner.nextInt();
+                try{
+                    dose = scanner.nextInt();
+                }catch (IllegalArgumentException e){
+                    System.out.println("Uygun bir deger giriniz !!");
+                }
                 scanner.nextLine();
                 coffee.addIngredient(ingredients, dose);
-            }catch(NumberFormatException e){
+            } catch (NumberFormatException e) {
                 System.out.println("Listeden uygun içerik numarasını girin . ");
-                continue;
             }
         }
+
     }
 
-    private static void finalizeOrder(CustomBeverage coffee) {
+    private boolean isAddIngredient(){
+        System.out.println("Seçtiğiniz Kahveye Ekstra İçerik Eklemek İster Misiniz ? (e/h)");
+        String input = scanner.nextLine();
+        try{
+            if(input.equalsIgnoreCase("e")){
+             return true;
+            }
+        }catch (IllegalArgumentException e){
+            System.out.println("Uygun bir deger giriniz !!");
+        }finally {
+            return false;
+        }
+
+    }
+    private void finalizeOrder(CustomBeverage coffee) {
         coffee.calculatePrice();
-        String contentsOfCoffee = coffee.toString();
-        System.out.println(contentsOfCoffee);
+        System.out.println(coffee);
         System.out.println("Afiyet Olsun .... ");
     }
 }

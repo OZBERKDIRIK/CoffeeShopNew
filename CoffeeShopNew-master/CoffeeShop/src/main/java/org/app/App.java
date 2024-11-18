@@ -1,6 +1,5 @@
 package org.app;
 
-import org.coffee.CustomBeverage;
 import org.factory.coffeefactory.CoffeeFactory;
 
 import java.util.Scanner;
@@ -9,8 +8,10 @@ public class App {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         CoffeeFactory factoryService = new CoffeeFactory();
-        CoffeeOrderManager orderManager = new CoffeeOrderManager(factoryService);
-        CoffeeLabApplication coffeeApp = new CoffeeLabApplication(sc, orderManager,new CustomBeverage());
+        Menu orderManager = new Menu(factoryService);
+        CoffeeLabApplication coffeeApp = new CoffeeLabApplication(sc, orderManager);
         coffeeApp.run();
+
     }
+
 }

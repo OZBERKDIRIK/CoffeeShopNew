@@ -1,8 +1,8 @@
 package org.coffee;
 
-public class Espresso extends NewBeverage{
+public class Espresso extends Beverage {
     public Espresso() {
         super("Espresso" , 10 );
-        addIngredient( new org.ingredients.Espresso(), 1);
+        addIngredient0( new org.ingredients.Espresso(), 1);
     }
 }

@@ -1,15 +1,14 @@
 package org.coffee;
 
-import org.factory.ingredientfactory.IngredientType;
 import org.ingredients.Espresso;
 import org.ingredients.HotWater;
 
-public class CaffeeLate extends NewBeverage{
+public class CaffeeLate extends Beverage {
     public CaffeeLate() {
         super("Caffee Late" , 18);
-        addIngredient(new Espresso(),1);
+        addIngredient0(new Espresso(),1);
 
-        addIngredient(new HotWater() ,4);
+        addIngredient0(new HotWater() ,4);
 
     }
 }

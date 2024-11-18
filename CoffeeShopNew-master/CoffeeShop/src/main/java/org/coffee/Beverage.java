@@ -5,28 +5,24 @@ import org.ingredients.Ingredient;
 import java.util.HashMap;
 import java.util.Map;
 
-public  class NewBeverage {
+public class Beverage {
     private float price; //base fiyat
     private String name;
 
 
     private Map<Ingredient, Integer> contetOfCoffee;
 
-    protected NewBeverage(String name, float price) {
+    protected Beverage(String name, float price) {
         this.price = price;
         this.name = name;
         contetOfCoffee=new HashMap<>();
     }
 
-    protected NewBeverage()
-    {
-
-    }
     public Map<Ingredient, Integer> getContetOfCoffee() {
         return contetOfCoffee;
     }
 
-    public void addIngredient(Ingredient ingredient , int doses){
+    protected void addIngredient0(Ingredient ingredient , int doses){
         if (contetOfCoffee.containsKey(ingredient)) {
             int currentDoses = contetOfCoffee.get(ingredient);
             contetOfCoffee.put(ingredient, currentDoses + doses);
@@ -34,7 +30,6 @@ public  class NewBeverage {
             contetOfCoffee.put(ingredient, doses);
         }
     }
-
 
     public String getName() {
         return name;
@@ -54,7 +49,7 @@ public  class NewBeverage {
 
     @Override
     public String toString(){
-        String coffeeInfo = this.name + "içerisinde --> \n";
+        String coffeeInfo = this.name + " içerisinde --> \n";
         for(Map.Entry<Ingredient, Integer> map :contetOfCoffee.entrySet()){
             Ingredient ingredient = map.getKey();
             int doses = map.getValue();

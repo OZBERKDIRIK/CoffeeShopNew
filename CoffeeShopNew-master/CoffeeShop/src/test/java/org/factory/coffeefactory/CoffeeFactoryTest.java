@@ -4,8 +4,8 @@ import org.coffee.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,7 +15,7 @@ class CoffeeFactoryTest {
     @BeforeEach
     void setUp(){
         coffeeFactory  =new CoffeeFactory();
-        Map<CoffeeType,CoffeeFactoryStrategy>coffeeList = coffeeFactory.getCoffeeList();
+        Map<CoffeeType, Supplier<Beverage>>coffeeList = coffeeFactory.getCoffeeCreatingMap();
         coffeeList.put(CoffeeType.ESPRESSO, ()->new Espresso());
         coffeeList.put(CoffeeType.DOUBLE_ESPRESSO, ()->new DoubleEspresso());
         coffeeList.put(CoffeeType.MOCHA, ()->new Mocha());
@@ -26,11 +26,11 @@ class CoffeeFactoryTest {
     @Test
     void testGetCoffeeList(){
         //Give
-            Map<CoffeeType , CoffeeFactoryStrategy> expectedCoffeeList = coffeeFactory.getCoffeeList();
+            Map<CoffeeType , Supplier<Beverage>> expectedCoffeeList = coffeeFactory.getCoffeeCreatingMap();
 
             //When
-          expectedCoffeeList.put(CoffeeType.CUSTOM_BEVERAGE , ()->new CustomBeverage());
-          Map<CoffeeType , CoffeeFactoryStrategy > actualCoffeeList = coffeeFactory.getCoffeeList();
+          expectedCoffeeList.put(CoffeeType.AMERICANO , ()->new Americano());
+          Map<CoffeeType , Supplier<Beverage>>actualCoffeeList = coffeeFactory.getCoffeeCreatingMap();
 
         //Then
 
@@ -43,13 +43,13 @@ class CoffeeFactoryTest {
     @Test
     void testRegisterCoffeeList(){
         //Give
-          Map<CoffeeType , CoffeeFactoryStrategy> expectedCoffeeList = coffeeFactory.getCoffeeList();
+          Map<CoffeeType , Supplier<Beverage>> expectedCoffeeList = coffeeFactory.getCoffeeCreatingMap();
         System.out.println("Expected : " + expectedCoffeeList);
 
         //When
             coffeeFactory.registerCoffee(CoffeeType.AMERICANO , ()->new Americano());
             coffeeFactory.registerCoffee(CoffeeType.CAPPUCCINO , ()->new Cappuccino());
-            Map<CoffeeType , CoffeeFactoryStrategy> actualCoffeeList = coffeeFactory.getCoffeeList();
+            Map<CoffeeType , Supplier<Beverage>> actualCoffeeList = coffeeFactory.getCoffeeCreatingMap();
             System.out.println("Actual : " +actualCoffeeList);
         //Then
 

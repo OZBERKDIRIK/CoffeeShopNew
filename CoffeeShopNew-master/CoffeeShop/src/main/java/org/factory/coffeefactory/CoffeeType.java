@@ -1,31 +1,24 @@
 package org.factory.coffeefactory;
 
-import org.coffee.NewBeverage;
-import org.coffee.*;
+import org.coffee.Beverage;
 
 public enum CoffeeType {
-    AMERICANO(new Americano(), 1),
-    CAFFEE_LATE(new CaffeeLate(), 2) ,
-    CAPPUCCINO(new Cappuccino() , 3) ,
-    ESPRESSO(new Espresso(), 4) ,
-    DOUBLE_ESPRESSO(new DoubleEspresso(), 5) ,
-    MOCHA(new Mocha(), 6) ,
-    CUSTOM_BEVERAGE(new CustomBeverage() ,7);
+    AMERICANO(1),
+    CAFFEE_LATE(2) ,
+    CAPPUCCINO(3) ,
+    ESPRESSO(4) ,
+    DOUBLE_ESPRESSO(5) ,
+    MOCHA(6),
+    CUSTOM_BEVERAGE(7);
     private final int index;
-    private final NewBeverage coffee;
 
-    CoffeeType (NewBeverage coffee, int index)
+    CoffeeType (int index)
     {
-        this.coffee = coffee;
         this.index = index;
     }
 
     public int getIndex() {
         return index;
-    }
-
-    public NewBeverage getCoffee() {
-        return coffee;
     }
 
     public static CoffeeType getCoffeeType(int index) {

@@ -1,6 +1,6 @@
 package org.factory.ingredientfactory;
 
-import org.app.CoffeeOrderManager;
+import org.app.Menu;
 import org.factory.coffeefactory.CoffeeFactory;
 import org.ingredients.Ingredient;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,10 +15,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class IngredientTypeTest {
 
-    private CoffeeOrderManager coffeeOrderManager;
+    private Menu coffeeOrderManager;
     @BeforeEach
     private void setUp(){
-        coffeeOrderManager=new CoffeeOrderManager(new CoffeeFactory());
+        coffeeOrderManager=new Menu(new CoffeeFactory());
     }
     static Stream<Arguments> ingredientProvider(){
         return  Stream.of(Arguments.of(1, IngredientType.getIngredient(1)),
@@ -27,11 +27,7 @@ class IngredientTypeTest {
                 Arguments.of(4, IngredientType.getIngredient(4)),
                 Arguments.of(5, IngredientType.getIngredient(5)));
     }
-    @Test
-    void getIngredient() {
 
-
-    }
 
 
     @ParameterizedTest

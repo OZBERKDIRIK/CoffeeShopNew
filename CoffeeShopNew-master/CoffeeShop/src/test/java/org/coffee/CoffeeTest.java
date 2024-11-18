@@ -1,22 +1,15 @@
 package org.coffee;
 
 
-import org.factory.ingredientfactory.IngredientType;
 import org.ingredients.*;
 import org.ingredients.Espresso;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.util.Map;
-import java.util.stream.Stream;
 
 public class CoffeeTest {
 
@@ -27,10 +20,11 @@ public class CoffeeTest {
     @BeforeEach
     void setUp(){
         americano =new Americano();
-        customBeverage=new CustomBeverage();
-        customBeverage.addIngredient(new Espresso() , 5);
-        customBeverage.addIngredient(new MilkFoam(), 16);
-        customBeverage.addIngredient(new SteamedMilk(),18);
+        customBeverage = new CustomBeverage(americano);
+        customBeverage.addIngredient0(new Espresso() , 5);
+        customBeverage.addIngredient0(new MilkFoam(), 16);
+        customBeverage.addIngredient0(new SteamedMilk(),18);
+        customBeverage.addIngredient0(new HotWater() , 20);
     }
 
     @Test
@@ -57,7 +51,7 @@ public class CoffeeTest {
     @Test
     void testCalculatePrice(){
        //Give
-            float expectedPricePrice = 6*10+ 16*4+ 18*7;
+            float expectedPricePrice = 5*10 +16*4+ 18*7;
             System.out.println("Expected price : " + expectedPricePrice);
 
        //when
@@ -81,7 +75,7 @@ public class CoffeeTest {
 
 
 
-       customBeverage.addIngredient(new HotChocolate(), 19);
+       customBeverage.addIngredient0(new HotChocolate(), 19);
        Map<Ingredient , Integer> actualContentOfBeverage=customBeverage.getContetOfCoffee();
        //Then
        assertEquals(expectedContentOfBeverage , actualContentOfBeverage);

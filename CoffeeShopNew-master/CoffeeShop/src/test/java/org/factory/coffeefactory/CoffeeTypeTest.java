@@ -1,25 +1,24 @@
 package org.factory.coffeefactory;
 
-import org.app.CoffeeOrderManager;
-import org.coffee.NewBeverage;
-import org.factory.ingredientfactory.IngredientType;
+import org.app.Menu;
+import org.coffee.Beverage;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class CoffeeTypeTest {
 
-    private CoffeeOrderManager coffeeOrderManager;
+    private Menu coffeeOrderManager;
+    private  CoffeeFactory cfs;
     @BeforeEach
     private void setUp(){
-        coffeeOrderManager=new CoffeeOrderManager(new CoffeeFactory());
+        coffeeOrderManager=new Menu(new CoffeeFactory());
+        cfs = new CoffeeFactory();
     }
     static Stream<Arguments> coffeeTypeProvider(){
         return  Stream.of(Arguments.of(1, CoffeeType.getCoffeeType(1)),
@@ -30,19 +29,18 @@ class CoffeeTypeTest {
     }
 
     static Stream<Arguments> coffeeProvider(){
-        return  Stream.of(Arguments.of(1, CoffeeType.getCoffeeType(1).getCoffee()),
-                Arguments.of(2, CoffeeType.getCoffeeType(2).getCoffee()),
-                Arguments.of(3, CoffeeType.getCoffeeType(3).getCoffee()),
-                Arguments.of(4, CoffeeType.getCoffeeType(4).getCoffee()),
-                Arguments.of(5, CoffeeType.getCoffeeType(5).getCoffee()));
+        CoffeeFactory cfs = new CoffeeFactory();
+        return  Stream.of(Arguments.of(1, cfs.createBeverage(1)),
+                Arguments.of(2, cfs.createBeverage(2)),
+                Arguments.of(3, cfs.createBeverage(3)),
+                Arguments.of(4, cfs.createBeverage(4)),
+                Arguments.of(5, cfs.createBeverage(5)));
     }
     @ParameterizedTest
     @MethodSource("coffeeProvider")
-    void getCoffee(int number , NewBeverage exceptedBeverage) {
-        CoffeeType coffeeType = CoffeeType.getCoffeeType(number);
-
+    void getCoffee(int number , Beverage exceptedBeverage) {
         //When
-           NewBeverage actualBeverage = coffeeType.getCoffee();
+           Beverage actualBeverage = cfs.createBeverage(number) ;
 
         //Then
             assertEquals(exceptedBeverage, actualBeverage);
