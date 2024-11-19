@@ -1,7 +1,8 @@
 package org.factory.coffeefactory;
 
-import org.coffee.NewBeverage;
+import org.coffee.Beverage;
 
+@FunctionalInterface
 public interface CoffeeFactoryStrategy {
-    NewBeverage createCoffee();
+    Beverage createCoffee();
 }

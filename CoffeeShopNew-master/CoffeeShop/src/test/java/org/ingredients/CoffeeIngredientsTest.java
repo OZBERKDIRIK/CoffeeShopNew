@@ -31,8 +31,7 @@ public class CoffeeIngredientsTest {
 
     @Test
     public void testSetInvalidPrice() {
-        coffeeIngredient.setPrice(-5);
-        assertEquals(5, coffeeIngredient.getPrice());
+        assertThrows(IllegalArgumentException.class, ()->coffeeIngredient.setPrice(-5));
     }
 
     @Test

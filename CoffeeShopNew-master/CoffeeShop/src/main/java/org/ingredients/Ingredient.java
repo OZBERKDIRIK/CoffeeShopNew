@@ -16,7 +16,11 @@ public class Ingredient {
         return price;
     }
     public void setPrice(int price){
-        this.price=price;
+        if(price >=0){
+         this.price=price;
+        }else{
+            throw new IllegalArgumentException("Fiyat Negatif olamaz . ");
+        }
     }
 
     @Override

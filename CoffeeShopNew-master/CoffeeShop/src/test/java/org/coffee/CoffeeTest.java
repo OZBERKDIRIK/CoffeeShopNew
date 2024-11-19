@@ -1,59 +1,86 @@
 package org.coffee;
 
 
+import org.ingredients.*;
 import org.ingredients.Espresso;
-import org.ingredients.HotWater;
-import org.ingredients.Ingredient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
+import java.util.Map;
 
 public class CoffeeTest {
 
-    private NewBeverage coffee;
-    private Ingredient espresso;
-    private Ingredient hotWater;
+   //NewBeverage içerisindeki calculatePrice ve addIngredient metotları test edilemesi amaçlanmıştır
 
-    // Setup - Testlerin öncesinde çalışır
+    private  CustomBeverage customBeverage;
+    private Americano americano;
     @BeforeEach
-    public void setUp() {
-        coffee = new NewBeverage("Test Coffee", 100);
-
-        espresso = new Espresso();
-
-        hotWater = new HotWater();
+    void setUp(){
+        americano =new Americano();
+        customBeverage = new CustomBeverage(americano);
+        customBeverage.addIngredient0(new Espresso() , 5);
+        customBeverage.addIngredient0(new MilkFoam(), 16);
+        customBeverage.addIngredient0(new SteamedMilk(),18);
+        customBeverage.addIngredient0(new HotWater() , 20);
     }
 
-    // addIngredient metodunu test eder
     @Test
-    public void testAddIngredient() {
-        coffee.addIngredient(espresso, 2);
-        coffee.addIngredient(hotWater, 1);
-
-        // Espresso için güncelleme
-        coffee.addIngredient(espresso, 3);
-
-        assertEquals(52, coffee.getPrice());
+    public void testGetName() {
+        assertEquals("Americano", americano.getName());
     }
 
-    // writeContents metodunu test eder
     @Test
-    public void testWriteContents() {
-        coffee.addIngredient(espresso, 1);
-        coffee.addIngredient(hotWater, 2);
-
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
-
-        System.out.println(coffee);
-
-        String expectedOutput = "Test Coffee içerisinde ---> 2 doz Hot Water içermektedir. 1 doz Espresso içermektedir. Toplam Fiyat : 14";
-
-        assertEquals(expectedOutput, outContent.toString().trim());
+    public void testGetPrice() {
+        assertEquals(18, americano.getPrice());
     }
+
+    @Test
+    public void testSetValidPrice() {
+        americano.setPrice(10);
+        assertEquals(10, americano.getPrice());
+    }
+
+    @Test
+    public void testSetInvalidPrice() {
+        assertThrows(IllegalArgumentException.class, () -> americano.setPrice(-1));
+    }
+
+    @Test
+    void testCalculatePrice(){
+       //Give
+            float expectedPricePrice = 5*10 +16*4+ 18*7;
+            System.out.println("Expected price : " + expectedPricePrice);
+
+       //when
+        customBeverage.calculatePrice();
+         float actualPrice= customBeverage.getPrice();
+        System.out.println("Actual Price : " + actualPrice);
+
+       //Then
+            assertEquals(expectedPricePrice,actualPrice,"Fiyat doğru hesaplanamamıştır");
+   }
+
+   @Test
+    void testAddIngredient(){
+        //Give
+       Map<Ingredient ,Integer > contentOfBeverage = customBeverage.getContetOfCoffee();
+       System.out.println(contentOfBeverage.toString());
+       //When
+       contentOfBeverage.put(new HotChocolate() , 19);
+       Map<Ingredient , Integer > expectedContentOfBeverage = contentOfBeverage;
+       System.out.println(expectedContentOfBeverage.toString());
+
+
+
+       customBeverage.addIngredient0(new HotChocolate(), 19);
+       Map<Ingredient , Integer> actualContentOfBeverage=customBeverage.getContetOfCoffee();
+       //Then
+       assertEquals(expectedContentOfBeverage , actualContentOfBeverage);
+       System.out.println(actualContentOfBeverage.toString());
+
+   }
 }
 
